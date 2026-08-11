@@ -1,7 +1,7 @@
 ---
 id: 001
 slug: check-model-rule
-status: in-review
+status: accepted
 branch: 001-check-model-rule
 ---
 
@@ -81,3 +81,8 @@ offending agent file and the model rule.
   three judgment nodes) fails the check naming the offending file, and
   `full-check.sh` inherits the rule via `exec check.sh`. Nothing remains; no
   dead ends. Ready for `/harness accept 001`.
+- 2026-08-11: Accepted. Fresh-context reviewer (diff + criteria only)
+  reported zero correctness or scope findings; all five verification
+  criteria re-executed green in the accept session; `full-check.sh` green
+  on the branch. No remote CI exists. No review failures, so no new
+  regression tests were required. Merge left to the human.
