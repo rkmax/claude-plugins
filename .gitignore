@@ -1,0 +1,5 @@
+# Re-include Claude Code config excluded by global gitignore rules;
+# this repo ships its harness check and stop hook.
+!.claude/
+!CLAUDE.md
+.claude/settings.local.json
