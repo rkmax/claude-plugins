@@ -54,13 +54,14 @@ committed there).
       exits 0, run before any symlink is repointed (harness content moved
       intact from dotfiles).
 - [x] Flow: on a clean config, `claude plugin marketplace add <repo path>`
-      then `claude plugin install graph@rkmax-plugins` and
-      `claude plugin install harness@rkmax-plugins` succeed; in a fresh
-      session bare `/graph` and `/harness` resolve to the plugin skills
-      (clean config has no `~/.claude` symlinks, so bare names do not
-      collide). Marketplace name is `rkmax-plugins`, not `claude-plugins`:
-      the validator rejects `claude-plugins` as impersonating an official
-      Anthropic marketplace (see 2026-08-11 work handoff).
+      then `claude plugin install graph@rkmax-claude-plugins` and
+      `claude plugin install harness@rkmax-claude-plugins` succeed; in a
+      fresh session bare `/graph` and `/harness` resolve to the plugin
+      skills (clean config has no `~/.claude` symlinks, so bare names do
+      not collide). Marketplace name is `rkmax-claude-plugins`, not
+      `claude-plugins`: the validator rejects `claude-plugins` as
+      impersonating an official Anthropic marketplace (see 2026-08-11
+      work handoff).
 
 ## Handoff
 
@@ -94,7 +95,7 @@ committed there).
   SKILL.md fan-out wording (`graph:graph-<angle>` when installed as a
   plugin). Deviation from intake: the CLI validator rejects marketplace
   name `claude-plugins` ("impersonates an official Anthropic/Claude
-  marketplace"), so the manifest name is `rkmax-plugins`; repo name is
+  marketplace"), so the manifest carries a prefixed name; repo name is
   unaffected. Criterion 5 updated accordingly. Flow verified on a clean
   `CLAUDE_CONFIG_DIR`: marketplace add + both installs succeeded, and in
   fresh headless sessions bare `/harness` and `/graph` resolved to the
@@ -103,3 +104,9 @@ committed there).
   repo: remove/repoint the `~/.claude/skills/{graph,harness}` and
   `~/.claude/agents/graph-*.md` symlinks, install via the marketplace,
   and unstage the harness copy from dotfiles.
+- 2026-08-11 (later): Renamed the marketplace `rkmax-plugins` →
+  `rkmax-claude-plugins` per user request (validator accepts it; only
+  bare `claude-plugins` is rejected). Updated README install commands
+  and criterion 5; re-ran validate and the clean-config install flow
+  plus bare `/graph` and `/harness` resolution under the new name.
+  Opened the PR for the branch.

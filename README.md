@@ -30,8 +30,8 @@ Add the marketplace and install the plugins:
 
 ```sh
 claude plugin marketplace add rkmax/claude-plugins   # or a local checkout path
-claude plugin install graph@rkmax-plugins
-claude plugin install harness@rkmax-plugins
+claude plugin install graph@rkmax-claude-plugins
+claude plugin install harness@rkmax-claude-plugins
 ```
 
 ## Usage
