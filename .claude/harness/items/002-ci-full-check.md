@@ -1,7 +1,7 @@
 ---
 id: 002
 slug: ci-full-check
-status: ready
+status: in-progress
 branch: 002-ci-full-check
 ---
 
