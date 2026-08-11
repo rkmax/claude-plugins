@@ -1,7 +1,7 @@
 ---
 id: 003
 slug: plugin-marketplace
-status: in-review
+status: accepted
 branch: 003-plugin-marketplace
 ---
 
