@@ -1,0 +1,8 @@
+{
+  "name": "harness",
+  "description": "Verifier-first working loop for a live product: intake turns raw requests into verifiable work items, one bounded session per item, adversarial acceptance gate.",
+  "version": "0.1.0",
+  "author": {
+    "name": "rkmax"
+  }
+}

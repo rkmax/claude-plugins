@@ -1,0 +1,21 @@
+{
+  "name": "rkmax-plugins",
+  "owner": {
+    "name": "rkmax"
+  },
+  "metadata": {
+    "description": "rkmax's Claude Code plugins: the graph investigation skill and the harness verifier-first working loop."
+  },
+  "plugins": [
+    {
+      "name": "graph",
+      "source": "./plugins/graph",
+      "description": "The Graph Blueprint: split a goal into pieces, fan out parallel worker agents with different angles, verify with a fresh-context verifier, merge what survives into one actionable report."
+    },
+    {
+      "name": "harness",
+      "source": "./plugins/harness",
+      "description": "Verifier-first working loop for a live product: intake turns raw requests into verifiable work items, one bounded session per item, adversarial acceptance gate."
+    }
+  ]
+}

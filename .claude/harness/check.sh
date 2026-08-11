@@ -39,7 +39,7 @@ def frontmatter(path):
     return data
 
 
-agent_files = sorted((root / "agents").glob("*.md"))
+agent_files = sorted(root.glob("plugins/*/agents/*.md"))
 for path in agent_files:
     data = frontmatter(path)
     if data is None:
@@ -62,7 +62,7 @@ for path in agent_files:
             f" 'model', found {model!r}"
         )
 
-skill_files = sorted((root / "skills").glob("*/SKILL.md"))
+skill_files = sorted(root.glob("plugins/*/skills/*/SKILL.md"))
 for path in skill_files:
     data = frontmatter(path)
     if data is None:
@@ -72,17 +72,19 @@ for path in skill_files:
         errors.append(
             f"{path.relative_to(root)}: name '{name}' does not match directory '{path.parent.name}'"
         )
+    plugin_root = path.parents[2]
     body = path.read_text()
     for ref in sorted(set(re.findall(r"`(graph-[a-z][a-z-]*)`", body))):
-        if not (root / "agents" / f"{ref}.md").exists():
+        if not (plugin_root / "agents" / f"{ref}.md").exists():
             errors.append(
-                f"{path.relative_to(root)}: references agent '{ref}' but agents/{ref}.md does not exist"
+                f"{path.relative_to(root)}: references agent '{ref}' but "
+                f"{plugin_root.relative_to(root)}/agents/{ref}.md does not exist"
             )
 
 if not agent_files:
-    errors.append("agents/: no agent files found")
+    errors.append("plugins/*/agents/: no agent files found")
 if not skill_files:
-    errors.append("skills/: no SKILL.md files found")
+    errors.append("plugins/*/skills/: no SKILL.md files found")
 
 if errors:
     print(f"check failed: {len(errors)} error(s)")
