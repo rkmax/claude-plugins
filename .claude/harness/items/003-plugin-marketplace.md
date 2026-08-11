@@ -1,7 +1,7 @@
 ---
 id: 003
 slug: plugin-marketplace
-status: ready
+status: in-review
 branch: 003-plugin-marketplace
 ---
 
@@ -44,20 +44,23 @@ committed there).
 
 ## Verification criteria
 
-- [ ] Command: `claude plugin validate .` exits 0 at the repo root.
-- [ ] Command: `bash .claude/harness/check.sh` exits 0 and reports 5 agents
+- [x] Command: `claude plugin validate .` exits 0 at the repo root.
+- [x] Command: `bash .claude/harness/check.sh` exits 0 and reports 5 agents
       and 2 skills validated (globs updated to the `plugins/*/` layout; the
       harness SKILL.md becomes covered by the check).
-- [ ] Command: `test ! -e skills && test ! -e agents` exits 0 at the repo
+- [x] Command: `test ! -e skills && test ! -e agents` exits 0 at the repo
       root (old top-level layout removed).
-- [ ] Command: `diff -r ~/.claude/skills/harness plugins/harness/skills/harness`
+- [x] Command: `diff -r ~/.claude/skills/harness plugins/harness/skills/harness`
       exits 0, run before any symlink is repointed (harness content moved
       intact from dotfiles).
-- [ ] Flow: on a clean config, `claude plugin marketplace add <repo path>`
-      then `claude plugin install graph@claude-plugins` and
-      `claude plugin install harness@claude-plugins` succeed; in a fresh
+- [x] Flow: on a clean config, `claude plugin marketplace add <repo path>`
+      then `claude plugin install graph@rkmax-plugins` and
+      `claude plugin install harness@rkmax-plugins` succeed; in a fresh
       session bare `/graph` and `/harness` resolve to the plugin skills
-      (old `~/.claude` symlinks removed so bare names do not collide).
+      (clean config has no `~/.claude` symlinks, so bare names do not
+      collide). Marketplace name is `rkmax-plugins`, not `claude-plugins`:
+      the validator rejects `claude-plugins` as impersonating an official
+      Anthropic marketplace (see 2026-08-11 work handoff).
 
 ## Handoff
 
@@ -81,4 +84,22 @@ committed there).
   CLAUDE.md paths, and the SKILL.md fan-out wording (agents register as
   `graph:graph-<angle>` when installed as a plugin). After merge, outside
   this repo: repoint `~/.claude` symlinks or install via local marketplace,
+  and unstage the harness copy from dotfiles.
+- 2026-08-11: Work session. Restructured to the target layout: created
+  `.claude-plugin/marketplace.json`, `plugins/graph/` (skills/graph +
+  agents moved via `git mv`), `plugins/harness/` (skill copied from
+  `~/.claude/skills/harness`, `diff -r` clean before any symlink change).
+  Updated check.sh globs (agent cross-refs now resolve per plugin root),
+  README (marketplace layout + install), CLAUDE.md paths, and the graph
+  SKILL.md fan-out wording (`graph:graph-<angle>` when installed as a
+  plugin). Deviation from intake: the CLI validator rejects marketplace
+  name `claude-plugins` ("impersonates an official Anthropic/Claude
+  marketplace"), so the manifest name is `rkmax-plugins`; repo name is
+  unaffected. Criterion 5 updated accordingly. Flow verified on a clean
+  `CLAUDE_CONFIG_DIR`: marketplace add + both installs succeeded, and in
+  fresh headless sessions bare `/harness` and `/graph` resolved to the
+  plugin skills (namespaced `harness:harness`). All five criteria pass
+  with evidence in the session. Remaining, post-merge and outside this
+  repo: remove/repoint the `~/.claude/skills/{graph,harness}` and
+  `~/.claude/agents/graph-*.md` symlinks, install via the marketplace,
   and unstage the harness copy from dotfiles.
