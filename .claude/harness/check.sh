@@ -14,6 +14,10 @@ import yaml
 root = pathlib.Path.cwd()
 errors = []
 
+# Model rule (CLAUDE.md): concrete nodes are pinned to sonnet, judgment
+# nodes must inherit the session model and so carry no 'model' key.
+PINNED_SONNET = {"graph-researcher", "graph-checker"}
+
 
 def frontmatter(path):
     text = path.read_text()
@@ -44,6 +48,18 @@ for path in agent_files:
     if name and name != path.stem:
         errors.append(
             f"{path.relative_to(root)}: name '{name}' does not match filename '{path.stem}'"
+        )
+    model = data.get("model")
+    if path.stem in PINNED_SONNET:
+        if model != "sonnet":
+            errors.append(
+                f"{path.relative_to(root)}: model rule: concrete node must declare"
+                f" 'model: sonnet', found {model!r}"
+            )
+    elif "model" in data:
+        errors.append(
+            f"{path.relative_to(root)}: model rule: judgment node must not declare"
+            f" 'model', found {model!r}"
         )
 
 skill_files = sorted((root / "skills").glob("*/SKILL.md"))
