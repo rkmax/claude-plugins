@@ -1,0 +1,12 @@
+name: full-check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  full-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: bash .claude/harness/full-check.sh

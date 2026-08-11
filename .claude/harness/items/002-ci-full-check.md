@@ -1,7 +1,7 @@
 ---
 id: 002
 slug: ci-full-check
-status: ready
+status: accepted
 branch: 002-ci-full-check
 ---
 
@@ -36,18 +36,18 @@ so a PR violating the repo rules would merge with no automated gate.
 
 ## Verification criteria
 
-- [ ] Command: `bash .claude/harness/full-check.sh` exits 0 on the item
+- [x] Command: `bash .claude/harness/full-check.sh` exits 0 on the item
       branch (the workflow must run this exact script, not a copy of its
       logic).
-- [ ] Command: after pushing the item branch and opening its PR,
+- [x] Command: after pushing the item branch and opening its PR,
       `gh pr checks <pr#> --watch` exits 0 and lists the new workflow check
       as passing.
-- [ ] Flow (negative case): push a scratch branch from the item branch with
+- [x] Flow (negative case): push a scratch branch from the item branch with
       a rule violation injected (`model: haiku` added to
       `agents/graph-verifier.md` frontmatter), open a draft PR; the same
       workflow check reports failure on that PR (`gh pr checks` exits
       nonzero). Close the draft PR and delete the scratch branch afterwards.
-- [ ] Command: `gh api repos/rkmax/The-Graph-Skill/actions/workflows --jq '.total_count'`
+- [x] Command: `gh api repos/rkmax/The-Graph-Skill/actions/workflows --jq '.total_count'`
       returns >= 1 after merge (checkable on the PR branch via the workflow
       file existing under `.github/workflows/` and the checks above).
 
@@ -56,3 +56,20 @@ so a PR violating the repo rules would merge with no automated gate.
 - 2026-08-11: Item filed at intake. Current behavior validated: no workflows
   locally or on GitHub, PR #1 merged with zero checks. Criteria are
   executable via `gh`. No implementation started.
+- 2026-08-11: Implemented on branch `002-ci-full-check`:
+  `.github/workflows/full-check.yml` runs `.claude/harness/full-check.sh` on
+  `pull_request` to `main` (checkout@v5; PyYAML preinstalled on the runner,
+  no install step needed). All four criteria verified live: full check green
+  locally, PR #2 check `full-check` passing (run 31544420361), negative-case
+  draft PR #3 failed naming `agents/graph-verifier.md` and the model rule
+  (run 31544351462; PR closed, scratch branch deleted), workflow count 1.
+  checkout was bumped v4 -> v5 mid-session to clear the Node 20 deprecation
+  annotation; re-run green without annotations. Nothing remains; no dead
+  ends. Ready for `/harness accept 002`.
+- 2026-08-11: Accepted. Fresh-context reviewer (diff + criteria only)
+  reported zero correctness or scope findings and re-verified all four
+  criteria against the live remote (PR #2 green on run 31544480672,
+  negative-case PR #3 failed on the injected rule, workflow count 1).
+  `full-check.sh` green locally and the remote `full-check` check green on
+  PR #2. No review failures, so no new regression tests were required.
+  Merge of PR #2 left to the human.
