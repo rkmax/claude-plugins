@@ -38,6 +38,9 @@ Route on the arguments (`$ARGUMENTS`):
   pick from the backlog on your own.
 
 Work items live in the repo at `.claude/harness/items/<NNN>-<slug>.md`; no
-external tracker is required, and none of the modes depend on `gh`.
+external tracker is required, and no mode hard-depends on `gh`: the work
+mode's close step uses it to open the pull request when a remote exists,
+and reports the missing PR as a pending human action when it is
+unavailable.
 
 Read only the reference file for the requested mode. Do not load the others.

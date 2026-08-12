@@ -1,7 +1,7 @@
 ---
 id: 005
 slug: work-close-opens-pr
-status: ready
+status: accepted
 branch: 005-work-close-opens-pr
 ---
 
@@ -79,3 +79,24 @@ the accept gate logic, retrofitting PRs for items 001-004.
   plugin source. Wording of the SKILL.md "none of the modes depend on
   `gh`" line is a work-session decision; the property to preserve is
   conditional use, not a hard dependency.
+- 2026-08-11: Work session on branch `005-work-close-opens-pr`. Amended
+  `work.md` step 6: the close step now pushes and opens a pull request from
+  the item branch to the default branch when a remote exists (an
+  already-open PR counts; without a PR tool, the missing PR is reported as
+  a pending human action). Reworded the SKILL.md routing line to "no mode
+  hard-depends on `gh`" with that conditional spelled out. Synced the
+  installed copy at `~/.claude/skills/harness` (`diff -r` clean). Command
+  criteria verified in-session: grep hits the close step (work.md:20,22),
+  sync diff exit 0, `check.sh` and `claude plugin validate .` exit 0. The
+  flow criterion is exercised by this very close: PR opened for this
+  branch per the amended rule, CI `full-check` run on it. Remaining:
+  `/harness accept 005`.
+- 2026-08-12: Accept gate. Fresh-context reviewer on the
+  `main...005-work-close-opens-pr` diff returned no findings and verified
+  all four criteria independently: grep hits the close step (work.md:20,22,
+  remote-conditional, default-branch target), source↔installed `diff -r`
+  exit 0, `check.sh` and `claude plugin validate .` exit 0, PR #6 open to
+  `main` with the `full-check` CI run passing. Local
+  `.claude/harness/full-check.sh` green. No real failures surfaced, so no
+  regression tests were added (markdown-only repo, structural check
+  unchanged). Verdict: accepted. Merge of PR #6 remains a human action.

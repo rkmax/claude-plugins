@@ -16,11 +16,14 @@ Input: `<item#>` — the work item number. Refuse to start without one.
    item. Do not refactor, rename, or clean up beyond what the item needs.
 5. Verify end-to-end as a real user would (running app, real CLI, browser
    flow), not only with unit tests. Show the evidence in the conversation.
-6. Close the session in a mergeable state: commit with a conventional message
-   (push if a remote exists) and append a dated entry to the item's Handoff
-   section: what was done, what remains, and any dead ends hit. Set
-   `status: in-review` if every criterion passes; leave `in-progress`
-   otherwise.
+6. Close the session in a mergeable state: commit with a conventional
+   message; if a remote exists, push and open a pull request from the item
+   branch to the default branch, so the accept gate has remote CI to
+   evaluate. An already-open PR for the branch counts; without a PR tool
+   (`gh` or equivalent), report the missing PR as a pending human action.
+   Append a dated entry to the item's Handoff section: what was done, what
+   remains, and any dead ends hit. Set `status: in-review` if every
+   criterion passes; leave `in-progress` otherwise.
 7. Tell the user the session is closed and that the next step is either
    another `/harness <item#>` session or `/harness accept <item#>`. Recommend
    `/clear` before the next item.
