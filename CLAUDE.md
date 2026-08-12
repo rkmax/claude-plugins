@@ -1,7 +1,10 @@
-# The Graph Skill
+# claude-plugins
 
-Markdown-only repo: one Claude Code skill (`skills/graph/`) and its worker
-agents (`agents/`). No build, no test suite.
+Markdown-only repo: a Claude Code plugin marketplace
+(`.claude-plugin/marketplace.json`) with two plugins under `plugins/` —
+`graph` (skill `plugins/graph/skills/graph/` plus worker agents
+`plugins/graph/agents/`) and `harness` (skill
+`plugins/harness/skills/harness/`). No build, no test suite.
 
 ## Check
 

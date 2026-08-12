@@ -1,0 +1,8 @@
+{
+  "name": "graph",
+  "description": "The Graph Blueprint: split a goal into pieces, fan out parallel worker agents with different angles, verify with a fresh-context verifier, merge what survives into one actionable report.",
+  "version": "0.2.0",
+  "author": {
+    "name": "rkmax"
+  }
+}
