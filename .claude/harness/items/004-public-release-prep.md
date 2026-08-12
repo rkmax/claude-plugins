@@ -1,7 +1,7 @@
 ---
 id: 004
 slug: public-release-prep
-status: in-review
+status: accepted
 branch: 004-public-release-prep
 ---
 
@@ -79,3 +79,12 @@ $ gh repo view --json visibility,description,licenseInfo \
   clean, `check.sh` and `claude plugin validate .` both exit 0. Remaining:
   accept, merge, then the human flips visibility and re-checks the
   post-merge observable (license SPDX `MIT` on the repo API).
+- 2026-08-11: Accept. Fresh-context reviewer (diff + criteria only) reported
+  no findings; it independently re-ran the four gated criteria and also
+  audited the secret-scan pathspec exclusion by scanning the excluded path
+  across all history: every hidden match is this file's own embedded regex
+  and prose, no credential-shaped strings masked. `full-check.sh` exit 0 on
+  the branch; remote CI `full-check` pass on PR #5. No failures, so no new
+  regression tests. Status set to accepted. Remaining human actions: merge
+  PR #5, `gh repo edit --visibility public`, then verify
+  `gh api repos/rkmax/claude-plugins --jq .license.spdx_id` returns `MIT`.
