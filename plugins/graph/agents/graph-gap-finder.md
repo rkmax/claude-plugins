@@ -1,6 +1,8 @@
 ---
 name: graph-gap-finder
 description: Graph Blueprint worker — hunts for what the goal statement and the obvious approach miss, including unstated assumptions, uncovered pieces, failure modes, and unasked questions. Invoked by the /graph skill; also usable standalone to stress a plan or goal before committing to it.
+model: sonnet
+effort: medium
 color: purple
 tools: Read, Grep, Glob
 ---

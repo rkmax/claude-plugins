@@ -14,22 +14,22 @@ Nodes do the work, edges carry the results. The main conversation orchestrates a
 
 1. **Goal.** Restate what the final report must answer in one falsifiable sentence, plus the decision it feeds. If the ambiguity would change the split, ask at most one round of clarifying questions (AskUserQuestion); otherwise proceed.
 2. **Split.** Break the goal into independent pieces and give each piece exactly one angle. A piece must be answerable without another piece's result; anything sequential stays in the main conversation or becomes a second wave after Verify.
-3. **Fan out.** Launch every worker in a single message (parallel Agent calls with `subagent_type: graph-<angle>`; when installed as a plugin the agents register namespaced as `graph:graph-<angle>`). Each prompt carries the goal verbatim, the piece, the angle question, and nothing from this conversation's reasoning. Workers never see each other's output. Models are fixed in each agent's definition; do not override them in the call.
+3. **Fan out.** Launch every worker in a single message (parallel Agent calls with `subagent_type: graph-<angle>`; when installed as a plugin the agents register namespaced as `graph:graph-<angle>`). Each prompt carries the goal verbatim, the piece, the angle question, and nothing from this conversation's reasoning. Workers never see each other's output. Models are fixed in each agent's definition; do not override them in the call (the dotfiles `agents-tier-gate` may downgrade model/effort at call time when the plan's quota is low).
 4. **Verify.** Pass `graph-verifier` the goal, each worker's piece assignment, and the raw returns; never the orchestrator's reasoning. Fresh context is the point: the verifier must be able to refute a worker without inheriting the orchestrator's assumptions. It returns one verdict per claim: confirmed, refuted, or unverifiable.
 5. **Merge.** Keep confirmed claims, drop refuted ones, carry unverifiable ones only with that label. Resolve contradictions between workers by evidence, never by confidence of phrasing. This happens in the main conversation.
 6. **Final answer.** One report: the answer first, then the evidence that survived verification, then open gaps. No process transcript, no per-agent narration.
 
 ## Angles
 
-| Agent | Angle | Model |
+| Agent | Angle | Tier |
 |---|---|---|
-| `graph-researcher` | gather facts and sources for a piece | sonnet |
-| `graph-comparator` | weigh options and trade-offs against explicit criteria | session |
-| `graph-checker` | validate concrete claims by reading code or running read-only commands | sonnet |
-| `graph-gap-finder` | find what the goal and the obvious approach miss | session |
-| `graph-verifier` | refute worker claims from fresh context (reduce step, not a worker) | session |
+| `graph-researcher` | gather facts and sources for a piece | Worker |
+| `graph-comparator` | weigh options and trade-offs against explicit criteria | Decision |
+| `graph-checker` | validate concrete claims by reading code or running read-only commands | Worker |
+| `graph-gap-finder` | find what the goal and the obvious approach miss | Worker |
+| `graph-verifier` | refute worker claims from fresh context (reduce step, not a worker) | Decision |
 
-Model economy follows the /task convention: concrete, well-specified nodes run on a cheaper model (set in the agent definition); judgment nodes omit `model` and inherit the session model.
+Model economy follows the /task convention: Worker tier nodes run on `sonnet` and Decision tier nodes on `opus` at max effort (both set in the agent definition).
 
 ## Rules
 

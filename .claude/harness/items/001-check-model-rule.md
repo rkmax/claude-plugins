@@ -61,8 +61,9 @@ offending agent file and the model rule.
 - [x] Command (concrete node wrong model):
       `t=$(mktemp -d) && cp -r . "$t/r" && sed -i "s/^model: sonnet$/model: haiku/" "$t/r/agents/graph-checker.md" && ! bash "$t/r/.claude/harness/check.sh"`
       exits 0 and the check output names `agents/graph-checker.md`.
-- [x] Command (judgment node with model): for each F in `graph-comparator`
-      `graph-gap-finder` `graph-verifier`:
+- [x] Command (judgment node with model; superseded by item 007, which moves
+      `graph-gap-finder` to the Worker tier): for each F in `graph-comparator`
+      `graph-verifier`:
       `t=$(mktemp -d) && cp -r . "$t/r" && sed -i "/^name: $F$/a model: sonnet" "$t/r/agents/$F.md" && ! bash "$t/r/.claude/harness/check.sh"`
       exits 0 and the check output names `agents/$F.md`.
 - [x] Command: `bash .claude/harness/full-check.sh` exits 0 on the compliant
