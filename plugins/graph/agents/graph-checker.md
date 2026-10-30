@@ -2,6 +2,7 @@
 name: graph-checker
 description: Graph Blueprint worker — validates a list of concrete claims by reading code or running read-only commands, returning one verdict per claim. Invoked by the /graph skill; also usable standalone to ground-check a list of factual claims about a repo or system.
 model: sonnet
+effort: medium
 color: orange
 tools: Read, Grep, Glob, Bash
 ---

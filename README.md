@@ -12,17 +12,17 @@ Claude Code plugin marketplace with two plugins:
 plugins/graph/
   .claude-plugin/plugin.json
   skills/graph/SKILL.md                  orchestration pipeline, invoked as /graph
-  agents/graph-researcher.md             gather facts and sources            (sonnet)
-  agents/graph-comparator.md             weigh options against criteria      (session model)
-  agents/graph-checker.md                validate concrete claims            (sonnet)
-  agents/graph-gap-finder.md             find what the framing misses        (session model)
-  agents/graph-verifier.md               refute worker claims, fresh context (session model)
+  agents/graph-researcher.md             gather facts and sources            (Worker tier)
+  agents/graph-comparator.md             weigh options against criteria      (Decision tier)
+  agents/graph-checker.md                validate concrete claims            (Worker tier)
+  agents/graph-gap-finder.md             find what the framing misses        (Worker tier)
+  agents/graph-verifier.md               refute worker claims, fresh context (Decision tier)
 plugins/harness/
   .claude-plugin/plugin.json
   skills/harness/SKILL.md                verifier-first loop, invoked as /harness
 ```
 
-In the graph plugin, concrete well-specified nodes run on a cheaper model pinned in their frontmatter; judgment nodes omit `model` and inherit the session model.
+In the graph plugin, Worker tier nodes run on `sonnet` and Decision tier nodes on `opus` at max effort, both pinned in their frontmatter.
 
 ## Install
 

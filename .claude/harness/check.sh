@@ -14,9 +14,10 @@ import yaml
 root = pathlib.Path.cwd()
 errors = []
 
-# Model rule (CLAUDE.md): concrete nodes are pinned to sonnet, judgment
-# nodes must inherit the session model and so carry no 'model' key.
-PINNED_SONNET = {"graph-researcher", "graph-checker"}
+# Model rule (CLAUDE.md): Worker-tier nodes are pinned to sonnet
+# with effort medium, Decision-tier nodes to opus with effort max.
+PINNED_SONNET = {"graph-researcher", "graph-checker", "graph-gap-finder"}
+PINNED_OPUS_MAX = {"graph-verifier", "graph-comparator"}
 
 
 def frontmatter(path):
@@ -51,15 +52,23 @@ for path in agent_files:
         )
     model = data.get("model")
     if path.stem in PINNED_SONNET:
-        if model != "sonnet":
+        if model != "sonnet" or data.get("effort") != "medium":
             errors.append(
-                f"{path.relative_to(root)}: model rule: concrete node must declare"
-                f" 'model: sonnet', found {model!r}"
+                f"{path.relative_to(root)}: model rule: Worker node must declare"
+                f" 'model: sonnet' and 'effort: medium', found {model!r}"
+                f" and {data.get('effort')!r}"
             )
-    elif "model" in data:
+    elif path.stem in PINNED_OPUS_MAX:
+        if model != "opus" or data.get("effort") != "max":
+            errors.append(
+                f"{path.relative_to(root)}: model rule: Decision node must declare"
+                f" 'model: opus' and 'effort: max', found {model!r}"
+                f" and {data.get('effort')!r}"
+            )
+    else:
         errors.append(
-            f"{path.relative_to(root)}: model rule: judgment node must not declare"
-            f" 'model', found {model!r}"
+            f"{path.relative_to(root)}: model rule: agent is in no tier;"
+            " add it to PINNED_SONNET or PINNED_OPUS_MAX"
         )
 
 skill_files = sorted(root.glob("plugins/*/skills/*/SKILL.md"))

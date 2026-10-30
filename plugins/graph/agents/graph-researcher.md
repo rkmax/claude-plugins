@@ -2,6 +2,7 @@
 name: graph-researcher
 description: Graph Blueprint worker — gathers facts and sources for one piece of a split goal. Invoked by the /graph skill; also usable standalone for any bounded fact-gathering task with a clear question.
 model: sonnet
+effort: medium
 color: blue
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
 ---

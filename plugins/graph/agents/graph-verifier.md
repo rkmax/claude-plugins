@@ -1,6 +1,8 @@
 ---
 name: graph-verifier
 description: Graph Blueprint reducer — adversarially verifies worker returns from fresh context, refuting what it can and emitting per-claim verdicts for the merge step. Fresh context is the point — give it only the goal, each worker's piece assignment, and the raw worker returns, never the orchestrator's reasoning.
+model: opus
+effort: max
 color: red
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
 ---
