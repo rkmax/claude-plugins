@@ -16,6 +16,9 @@ Markdown-only repo: a Claude Code plugin marketplace
 
 ## Rules
 
+- Any change under `plugins/<name>/` bumps `version` in its
+  `.claude-plugin/plugin.json`: a pinned version keeps installed copies on
+  the cached files until it changes. `check.sh` fails otherwise.
 - Agent frontmatter `name` must match the filename; skill `name` must match
   its directory name.
 - Worker models are pinned in each agent's frontmatter on purpose: Worker

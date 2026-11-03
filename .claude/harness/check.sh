@@ -6,7 +6,9 @@ cd "$(dirname "$0")/../.."
 
 python3 - <<'PY'
 import pathlib
+import json
 import re
+import subprocess
 import sys
 
 import yaml
@@ -89,6 +91,29 @@ for path in skill_files:
                 f"{path.relative_to(root)}: references agent '{ref}' but "
                 f"{plugin_root.relative_to(root)}/agents/{ref}.md does not exist"
             )
+
+# A pinned plugin.json version keeps installed copies on the cached files
+# until the string changes, so any change under plugins/<name>/ since
+# origin/main must bump it or users never receive the change.
+base = subprocess.run(
+    ["git", "merge-base", "origin/main", "HEAD"], capture_output=True, text=True
+).stdout.strip()
+for manifest in sorted(root.glob("plugins/*/.claude-plugin/plugin.json")):
+    plugin_dir = manifest.parents[1].relative_to(root)
+    if not base or subprocess.run(
+        ["git", "diff", "--quiet", base, "--", str(plugin_dir)]
+    ).returncode == 0:
+        continue
+    old = subprocess.run(
+        ["git", "show", f"{base}:{manifest.relative_to(root)}"],
+        capture_output=True, text=True,
+    )
+    version = json.loads(manifest.read_text()).get("version")
+    if old.returncode == 0 and version == json.loads(old.stdout).get("version"):
+        errors.append(
+            f"{manifest.relative_to(root)}: {plugin_dir} changed since origin/main"
+            f" but version is still {version!r}; bump it so installed copies update"
+        )
 
 if not agent_files:
     errors.append("plugins/*/agents/: no agent files found")
