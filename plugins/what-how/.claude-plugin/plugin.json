@@ -1,0 +1,8 @@
+{
+  "name": "what-how",
+  "description": "Separate a request's WHAT (the outcome wanted) from its HOW (the method it prescribes), clarify the WHAT, then choose whether the HOW is weighed, kept as advisory, or dropped before the work starts.",
+  "version": "0.1.0",
+  "author": {
+    "name": "rkmax"
+  }
+}

@@ -1,10 +1,10 @@
 # claude-plugins
 
 Markdown-only repo: a Claude Code plugin marketplace
-(`.claude-plugin/marketplace.json`) with two plugins under `plugins/` —
-`graph` (skill `plugins/graph/skills/graph/` plus worker agents
-`plugins/graph/agents/`) and `harness` (skill
-`plugins/harness/skills/harness/`). No build, no test suite.
+(`.claude-plugin/marketplace.json`). Each plugin lives in
+`plugins/<name>/` with its manifest in `.claude-plugin/plugin.json`, skills
+in `skills/<skill>/SKILL.md` and optional agents in `agents/`. No build, no
+test suite.
 
 ## Check
 
