@@ -4,7 +4,7 @@
     "name": "rkmax"
   },
   "metadata": {
-    "description": "rkmax's Claude Code plugins: the graph investigation skill, the harness verifier-first working loop, and the what-how request splitter."
+    "description": "rkmax's Claude Code plugins."
   },
   "plugins": [
     {

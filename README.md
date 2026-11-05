@@ -1,6 +1,6 @@
 # claude-plugins
 
-Claude Code plugin marketplace with three plugins:
+Claude Code plugin marketplace. Plugins:
 
 - **graph** — The Graph Blueprint: split a goal into pieces, fan out parallel worker agents with different angles, verify their output with a fresh-context verifier, merge what survives, and return one clear actionable report.
 - **harness** — Verifier-first working loop for a live product: intake turns raw requests into verifiable work items, one bounded session per item, adversarial acceptance gate.
