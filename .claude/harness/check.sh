@@ -115,6 +115,37 @@ for manifest in sorted(root.glob("plugins/*/.claude-plugin/plugin.json")):
             f" but version is still {version!r}; bump it so installed copies update"
         )
 
+# Every marketplace entry must point at a plugin that exists under the
+# same name, and every plugin directory must be listed, or installs fail
+# (or the plugin is never offered) while the rest of this check passes.
+marketplace_path = root / ".claude-plugin" / "marketplace.json"
+listed = set()
+for entry in json.loads(marketplace_path.read_text()).get("plugins", []):
+    name, source = entry.get("name"), entry.get("source")
+    listed.add(name)
+    if not isinstance(source, str) or not source.startswith("./"):
+        continue
+    manifest = root / source / ".claude-plugin" / "plugin.json"
+    if not manifest.is_file():
+        errors.append(
+            f"{marketplace_path.relative_to(root)}: plugin '{name}' source"
+            f" {source} has no .claude-plugin/plugin.json"
+        )
+        continue
+    manifest_name = json.loads(manifest.read_text()).get("name")
+    if manifest_name != name:
+        errors.append(
+            f"{marketplace_path.relative_to(root)}: plugin '{name}' points at"
+            f" {source}, whose plugin.json is named {manifest_name!r}"
+        )
+for manifest in sorted(root.glob("plugins/*/.claude-plugin/plugin.json")):
+    name = json.loads(manifest.read_text()).get("name")
+    if name not in listed:
+        errors.append(
+            f"{manifest.relative_to(root)}: plugin '{name}' is not listed in"
+            f" {marketplace_path.relative_to(root)}"
+        )
+
 if not agent_files:
     errors.append("plugins/*/agents/: no agent files found")
 if not skill_files:
