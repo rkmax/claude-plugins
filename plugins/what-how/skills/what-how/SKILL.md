@@ -15,6 +15,14 @@ clarifies the WHAT, and lets the user decide what the agent receives.
 The deliverable is the package the user chooses; the agent then attends it. Nothing
 is implemented before the user picks a mode.
 
+## Asking the user
+
+Wherever the process asks the user, use the host's question tool and follow its
+schema's limits: `AskUserQuestion` in Claude Code; in Codex,
+`request_user_input_async` when available, or `request_user_input` only in the
+modes where its schema permits it. If no question tool is usable, ask in
+conversation and wait for the answer.
+
 ## Process
 
 1. **Capture the raw request** from the skill args, verbatim. If there is none, ask
@@ -51,8 +59,8 @@ is implemented before the user picks a mode.
    - **Constraints**: the real ones, with those moved from the HOW marked.
    - **Gaps**: what the HOW was covering up (unstated success condition, unclear
      scope, a goal the HOW does not actually reach). Ask about a gap only when its
-     answer changes the objective, acceptance or scope; ask with `AskUserQuestion`,
-     at most one round, with concrete options. Gaps that do not
+     answer changes the objective, acceptance or scope; ask with the host's question
+     tool (see Asking the user), at most one round, with concrete options. Gaps that do not
      change those three are listed as assumptions instead.
 5. **Present and choose.** Show the WHAT and the HOW list (each HOW item with the
    WHAT it serves), then ask which package the agent attends:
