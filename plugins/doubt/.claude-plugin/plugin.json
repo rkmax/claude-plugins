@@ -12,7 +12,7 @@
       "type": "string",
       "title": "Doubt",
       "description": "The text Claude is asked before it ends a turn or asks you a question, exactly as you would type it.",
-      "default": "¿Estás seguro? ¿Por qué así?"
+      "default": "Are you sure? Why this way?"
     }
   }
 }
