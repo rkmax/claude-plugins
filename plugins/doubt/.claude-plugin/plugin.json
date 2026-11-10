@@ -1,0 +1,18 @@
+{
+  "name": "doubt",
+  "version": "0.1.0",
+  "description": "Opt-in per conversation: before Claude hands back an answer or asks you a question, it is asked your own doubt once, so it re-examines its work without you typing it.",
+  "author": {
+    "name": "rkmax"
+  },
+  "license": "MIT",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "question": {
+      "type": "string",
+      "title": "Doubt",
+      "description": "The text Claude is asked before it ends a turn or asks you a question, exactly as you would type it.",
+      "default": "¿Estás seguro? ¿Por qué así?"
+    }
+  }
+}
