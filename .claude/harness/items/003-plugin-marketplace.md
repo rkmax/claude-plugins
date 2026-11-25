@@ -17,8 +17,8 @@ Verbatim, from conversation on 2026-08-11 (Spanish):
 
 Agreed scope: convert the repo into a Claude Code plugin marketplace with two
 plugins — `graph` (skill + worker agents, currently at the repo root) and
-`harness` (skill moved into this repo from the user's dotfiles, where it is
-staged but was never committed). The repo and local folder are renamed
+`harness` (skill moved into this repo from the user's local agent config, where
+it was never committed). The repo and local folder are renamed
 `The-Graph-Skill` → `claude-plugins` during intake, independently of this
 item's work.
 
@@ -28,7 +28,7 @@ The current layout is not installable as a plugin or marketplace:
 
 ```
 $ claude plugin validate .
-Validating plugin manifest: /home/rkmax/Development/Personal/The-Graph-Skill
+Validating plugin manifest: <repo root>
 ✘ Found 1 error:
   ❯ directory: No manifest found in directory. Expected
     .claude-plugin/marketplace.json or .claude-plugin/plugin.json
@@ -37,10 +37,8 @@ exit: 1
 ```
 
 `skills/graph/` and `agents/` sit at the repo root and install is manual
-symlinking per README.md. The harness skill lives outside the repo at
-`~/Development/Personal/dotfiles/packages/agents/.claude/skills/harness`
-(symlinked as `~/.claude/skills/harness`; staged in dotfiles, never
-committed there).
+symlinking per README.md. The harness skill lives outside the repo, in the user's local agent config
+(symlinked as `~/.claude/skills/harness`; never committed there).
 
 ## Verification criteria
 
@@ -52,7 +50,7 @@ committed there).
       root (old top-level layout removed).
 - [x] Command: `diff -r ~/.claude/skills/harness plugins/harness/skills/harness`
       exits 0, run before any symlink is repointed (harness content moved
-      intact from dotfiles).
+      intact from the local config).
 - [x] Flow: on a clean config, `claude plugin marketplace add <repo path>`
       then `claude plugin install graph@rkmax-claude-plugins` and
       `claude plugin install harness@rkmax-claude-plugins` succeed; in a
@@ -85,7 +83,7 @@ committed there).
   CLAUDE.md paths, and the SKILL.md fan-out wording (agents register as
   `graph:graph-<angle>` when installed as a plugin). After merge, outside
   this repo: repoint `~/.claude` symlinks or install via local marketplace,
-  and unstage the harness copy from dotfiles.
+  and unstage the harness copy from the local config.
 - 2026-08-11: Work session. Restructured to the target layout: created
   `.claude-plugin/marketplace.json`, `plugins/graph/` (skills/graph +
   agents moved via `git mv`), `plugins/harness/` (skill copied from
@@ -103,7 +101,7 @@ committed there).
   with evidence in the session. Remaining, post-merge and outside this
   repo: remove/repoint the `~/.claude/skills/{graph,harness}` and
   `~/.claude/agents/graph-*.md` symlinks, install via the marketplace,
-  and unstage the harness copy from dotfiles.
+  and unstage the harness copy from the local config.
 - 2026-08-11 (later): Renamed the marketplace `rkmax-plugins` →
   `rkmax-claude-plugins` per user request (validator accepts it; only
   bare `claude-plugins` is rejected). Updated README install commands

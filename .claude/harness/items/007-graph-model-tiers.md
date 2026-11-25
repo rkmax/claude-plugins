@@ -35,5 +35,5 @@ naming the agent file.
 
 - 2026-10-29: Implemented on `feat/graph-model-tiers`; first four criteria
   executed green. Docs (`CLAUDE.md`, `README.md`, graph `SKILL.md`) note that
-  the dotfiles `agents-tier-gate` may downgrade model/effort at call time
+  a local quota hook may downgrade model/effort at call time
   when quota is low.
