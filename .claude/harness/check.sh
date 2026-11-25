@@ -17,9 +17,9 @@ root = pathlib.Path.cwd()
 errors = []
 
 # Model rule (CLAUDE.md): Worker-tier nodes are pinned to sonnet
-# with effort medium, Decision-tier nodes to opus with effort max.
+# with effort medium, Decision-tier nodes to fable with effort max.
 PINNED_SONNET = {"graph-researcher", "graph-checker", "graph-gap-finder"}
-PINNED_OPUS_MAX = {"graph-verifier", "graph-comparator"}
+PINNED_DECISION_MAX = {"graph-verifier", "graph-comparator"}
 
 
 def frontmatter(path):
@@ -60,17 +60,17 @@ for path in agent_files:
                 f" 'model: sonnet' and 'effort: medium', found {model!r}"
                 f" and {data.get('effort')!r}"
             )
-    elif path.stem in PINNED_OPUS_MAX:
-        if model != "opus" or data.get("effort") != "max":
+    elif path.stem in PINNED_DECISION_MAX:
+        if model != "fable" or data.get("effort") != "max":
             errors.append(
                 f"{path.relative_to(root)}: model rule: Decision node must declare"
-                f" 'model: opus' and 'effort: max', found {model!r}"
+                f" 'model: fable' and 'effort: max', found {model!r}"
                 f" and {data.get('effort')!r}"
             )
     else:
         errors.append(
             f"{path.relative_to(root)}: model rule: agent is in no tier;"
-            " add it to PINNED_SONNET or PINNED_OPUS_MAX"
+            " add it to PINNED_SONNET or PINNED_DECISION_MAX"
         )
 
 skill_files = sorted(root.glob("plugins/*/skills/*/SKILL.md"))

@@ -24,7 +24,7 @@ test suite.
 - Agent frontmatter `name` must match the filename; skill `name` must match
   its directory name.
 - Worker models are pinned in each agent's frontmatter on purpose: Worker
-  tier nodes run on `sonnet` (effort `medium`), Decision tier nodes on `opus`
+  tier nodes run on `sonnet` (effort `medium`), Decision tier nodes on `fable`
   (effort `max`). Do not remove `model` from agents or override models at
   call time (the dotfiles `agents-tier-gate` may downgrade model/effort when
   the plan's quota is low).

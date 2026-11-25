@@ -1,7 +1,7 @@
 ---
 name: graph-comparator
 description: Graph Blueprint worker — weighs options or approaches for one piece of a split goal and returns a ranked comparison with explicit criteria. Invoked by the /graph skill; also usable standalone when options are already on the table and need judging.
-model: opus
+model: fable
 effort: max
 color: yellow
 tools: Read, Grep, Glob

@@ -29,7 +29,7 @@ Nodes do the work, edges carry the results. The main conversation orchestrates a
 | `graph-gap-finder` | find what the goal and the obvious approach miss | Worker |
 | `graph-verifier` | refute worker claims from fresh context (reduce step, not a worker) | Decision |
 
-Model economy follows the /task convention: Worker tier nodes run on `sonnet` and Decision tier nodes on `opus` at max effort (both set in the agent definition).
+Model economy follows the /task convention: Worker tier nodes run on `sonnet` and Decision tier nodes on `fable` at max effort (both set in the agent definition).
 
 ## Rules
 
