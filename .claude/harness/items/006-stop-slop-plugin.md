@@ -9,7 +9,7 @@ branch: 006-stop-slop-plugin
 
 > agreguemos el skill stop slop
 
-Source: user (Julian), via `/harness intake`, 2026-08-12. Interpretation:
+Source: user, via `/harness intake`, 2026-08-12. Interpretation:
 add the third-party `stop-slop` skill as a new plugin in this marketplace,
 alongside `graph` and `harness`.
 
