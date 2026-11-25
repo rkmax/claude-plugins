@@ -1,10 +1,11 @@
 # claude-plugins
 
-Markdown-only repo: a Claude Code plugin marketplace
+Mostly Markdown: a Claude Code plugin marketplace
 (`.claude-plugin/marketplace.json`). Each plugin lives in
 `plugins/<name>/` with its manifest in `.claude-plugin/plugin.json`, skills
-in `skills/<skill>/SKILL.md` and optional agents in `agents/`. No build, no
-test suite.
+in `skills/<skill>/SKILL.md` and optional agents in `agents/`. `doubt` is a
+TypeScript hooks module (`plugins/doubt/hooks/`) and the only plugin with
+tests.
 
 ## Check
 
@@ -15,6 +16,11 @@ test suite.
   pass before ending a turn.
 - `.claude/harness/full-check.sh` — full gate for `/harness accept`; in this
   repo it is the same structural check.
+- For `plugins/doubt/`, run `claude plugin validate plugins/doubt` and
+  `claude plugin test plugins/doubt`. CI does not run them.
+- `tsc -p plugins/doubt` works once Claude Code has loaded the mod once: its
+  `tsconfig.json` extends `.claude-plugin/types/tsconfig.json`, which the
+  engine writes on load and git ignores.
 
 ## Rules
 

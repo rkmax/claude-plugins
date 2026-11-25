@@ -8,6 +8,11 @@
   },
   "plugins": [
     {
+      "name": "doubt",
+      "source": "./plugins/doubt",
+      "description": "Opt-in per conversation: before Claude hands back an answer or asks you a question, it is asked your own doubt once, so it re-examines its work without you typing it."
+    },
+    {
       "name": "graph",
       "source": "./plugins/graph",
       "description": "The Graph Blueprint: split a goal into pieces, fan out parallel worker agents with different angles, verify with a fresh-context verifier, merge what survives into one actionable report."

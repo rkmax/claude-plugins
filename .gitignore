@@ -3,3 +3,6 @@
 !.claude/
 !CLAUDE.md
 .claude/settings.local.json
+
+# Types the Claude Code engine writes into a loaded mod folder (generated)
+plugins/*/.claude-plugin/types/
