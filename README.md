@@ -22,7 +22,7 @@ plugins/what-how/
   skills/what-how/SKILL.md               request splitter, invoked as /what-how
 ```
 
-In the graph plugin, Worker tier nodes run on `sonnet` and Decision tier nodes on `opus` at max effort, both pinned in their frontmatter.
+In the graph plugin, Worker tier nodes run on `sonnet` and Decision tier nodes on `fable` at max effort, both pinned in their frontmatter.
 
 ## Install
 
